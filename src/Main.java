@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Scanner INPUT = new Scanner(System.in);
@@ -13,7 +13,7 @@ public class Main {
         System.out.println("The memories come flooding back. You were guiding a scenic helicopter tour\n" +
                 "of the gopher valley when a massive hoard of flying gophers comes and ambushes your helicopter.\n" +
                 "Some of the flying gophers ended up being swallowed by the helicopter's rotors, destroying the gears\n" +
-                "and rendering the propellors useless. The gophers who didn't die smashed through the side door of the helicopter and\n" +
+                "and rendering the propellers useless. The gophers who didn't die smashed through the side door of the helicopter and\n" +
                 "brutally murdered all of your passengers. At this point, the helicopter had become engulfed in flames,\n" +
                 "so the flying gophers were unable to continue their operation. This left you the sole survivor. \n" +
                 "Knocked out from the shock of engine explosions and propellers failing, but alive.");
@@ -90,7 +90,7 @@ public class Main {
         } else{
             Area = "Plains";
             System.out.println("\n\nThe ground comes into view and below you see a lush grass blowing in the wind. This scenery irks you, as there is no wind  that should be blowing the grass in such a manner.\n" +
-                    " As you near the ground, you notice the grass is moving becuase of the hoards of gophers running through this tall grass. \n" +
+                    " As you near the ground, you notice the grass is moving because of the hoards of gophers running through this tall grass. \n" +
                     "You hit the ground, and immediately those vicious beasts jump onto you and begin biting and clawing at your flesh.\n" +
                     "Momentarily stalled by taking off your parachute pack, you run away from the gopher congregation into a safer are of the plains. \n" +
                     "After catching your breath you take in your surroundings and spot a forest and a large mountain in the distance.\n" +
@@ -203,6 +203,9 @@ public class Main {
                         System.out.println("\nYour gophers have already been cooked.\n");
                     }
                 }
+                else {
+                    System.out.println("\nSorry, please phrase your request differently");
+                    Thread.sleep(500);}
             }
             if (Area.equals("Plains")) {
                 if (!Inventory[4]) {
@@ -223,7 +226,7 @@ public class Main {
                         System.out.println("\nYou do not dare approach the gophers. You require a weapon that allows you to kill them from a distance somehow.\n");
                     }
                 }
-                if (plainsActivities.contains("eat")) {
+                else if (plainsActivities.contains("eat")) {
                     if (Cooked) {
                         System.out.println("\nYou eat the gophers you cooked and regain energy.\n");
                         Inventory[4] = false;
@@ -236,14 +239,21 @@ public class Main {
                         DeathString();
                     }
                 }
-                if (plainsActivities.contains("forest")) {
+                else if(plainsActivities.contains("sleep")){
+                    System.out.println("\nThe night is cold and you have nothing to warm you. You freeze to death this lonely night.\n");
+                    DeathString();
+                }
+                else if (plainsActivities.contains("forest")) {
                     System.out.println("\nYou walk towards the treeline and make your way into the forest.\n");
                     Area = "Forest";
                 }
-                if (plainsActivities.contains("mount")) {
+                else if (plainsActivities.contains("mount")) {
                     System.out.println("\nYou walk towards the base of the mountain.\n");
                     Area = "Mountain";
                 }
+                else {
+                    System.out.println("\nSorry, please phrase your request differently");
+                    Thread.sleep(500);}
             }
             if (Area.equals("Mountain")) {
                 if (!Inventory[5]) {
@@ -262,13 +272,13 @@ public class Main {
                         System.out.println("\nYou finally reach the source of the smoke. It is your helicopter that was so brutally attacked by a flying gopher squadron.\n" +
                                 "After staring into the wreckage for a few minutes, you notice your communications device laying within the ruins, miraculously, unscathed.\n" +
                                 "You precariously hop around the scalding hot metal shards, pick up the communications device, and clip it onto your belt.\n" +
-                                "If yopu can just get to the top of the mountain, you can send out a distress signal and someone may actually receive it.\n");
+                                "If you can just get to the top of the mountain, you can send out a distress signal and someone may actually receive it.\n");
                         Inventory[5] = true;
                     } else {
                         System.out.println("\nYou've already looked through the ruins and there was nothing else intact other than the comms device you picked up.\n");
                     }
                 }
-                if (mountainActivities.contains("climb")) {
+                else if (mountainActivities.contains("climb")) {
                     if (!Sleep) {
                         System.out.println("\nYou are too tired to climb the mountain. Get some rest.\n");
                     } else {
@@ -284,10 +294,13 @@ public class Main {
                             Sleep = false;
                             System.out.println("\nAfter a long, tiresome ascent, you reach the summit.\n");
                             if (!Inventory[5]) {
-                                System.out.println("\nThere is no civilization that you can see from this vantage point. Nice view though.\n");
+                                System.out.println("\nThere is no civilization that you can see from this vantage point. Nice view though.\n" +
+                                        "You walk back down to your camp in the forest.\n");
+                                Area = "Forest";
+                                Thread.sleep(2000);
                             } else {
                                 System.out.print("\nYou unclip your comms device from your belt.\n" +
-                                        "(Which Direction would you like to send a distress signal in?\n" +
+                                        "(Which Direction would you like to send a distress signal in?)\n" +
                                         "   - North\n" +
                                         "   - South\n" +
                                         "   - West\n" +
@@ -295,6 +308,7 @@ public class Main {
                                         ">  ");
                                 String signalDirection = INPUT.nextLine();
                                 System.out.println("\nYou face " + signalDirection + " and send out a distress call, hoping someone may be receive it\n");
+                                Thread.sleep(500);
                                 boolean Saved = Random();
                                 if (Saved) {
                                     System.out.println("A crackling noise comes out of the device's speaker. After a moment, you hear someone speak.\n" +
@@ -305,31 +319,35 @@ public class Main {
                                             "Then out of nowhere, a flock of small birds begins flying towards the rescue helicopter. Upon closer inspection you are horrified.\n" +
                                             "It is yet another group of flying gophers ready to attack. Your spirits drop as you watch the helicopter go up in flames and drop into\n" +
                                             "the Gopher Valley. The gophers were aware of your waving, and begin their approach. These gophers's thirst for blood is insatiable.\n" +
-                                            "You are frozen in horror. The gophers arrive and sink their claws and teeth into your flesh. You are eaten alive.");
+                                            "You are frozen in horror. The gophers arrive and sink their claws and teeth into your flesh. You are eaten alive.\n");
                                     Thread.sleep(1000);
-                                    System.out.println("In the end your efforts to escape were futile, and the hell of gohper valley was impossible to escape.");
+                                    System.out.println("\nIn the end your efforts to escape were futile, and the hell of gohper valley was impossible to escape.\n");
                                     Thread.sleep(3000);
                                     Victory = true;
                                 }
                                 else{
-                                    System.out.println("Your comms device remained silent, and after that unsuccessful attempt to reach someone, you made your way  down the mountain and back to the camp you set up in the forest.");
+                                    System.out.println("Your comms device remained silent, and after that unsuccessful attempt to reach someone, you made your way  down the mountain and back to the camp you set up in the forest.\n\n");
                                     Area = "Forest";
+                                    Thread.sleep(2000);
                                 }
 
                             }
                         }
                     }
                 }
-                if (mountainActivities.contains("forest")) {
+                else if (mountainActivities.contains("forest")) {
                     System.out.println("\nYou walk towards the treeline and make your way into the forest.\n");
                     Area = "Forest";
                 }
                 else if (mountainActivities.contains("plain")) {
                     System.out.println("\nYou wander off through the forest to find the plains.");
                     Area = "Plains";}
+                else {
+                    System.out.println("\nSorry, please phrase your request differently");
+                    Thread.sleep(500);}
             }
         }
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe End.\n\nThank you for playing.");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe End.\n\n\n\n\n\nThank you for playing.");
     }
 
 
@@ -338,8 +356,8 @@ public class Main {
 static boolean Random(){
         boolean signalReceived;
 Random random = new Random();
-int x = random.nextInt(4)+1;
-    signalReceived = x == 4;
+int x = random.nextInt(3)+1;
+    signalReceived = x == 3;
 return  signalReceived;
 }
 
